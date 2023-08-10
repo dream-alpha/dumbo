@@ -2,7 +2,7 @@
 #
 # dumbo.sh (c) gutemine 2023 
 #
-VERSION="V1.1"
+VERSION="V1.2"
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -296,7 +296,6 @@ if [ ! -e /boot/dreamseven.dtb ]; then
    echo "NO AIO Image in Flash"
    echo $LINE
    false
-   return 0
 else
    echo "AIO Image in Flash"
    echo $LINE
@@ -1203,9 +1202,7 @@ checkBinaries
 
 doCleanup
 
-if ! checkAIO; then
-   dumboExit
-fi
+checkAIO
 
 if showBooted; then
    dumboExit
