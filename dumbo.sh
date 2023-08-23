@@ -3,7 +3,7 @@
 # dumbo.sh (c) gutemine 2023 
 #           co-authors from version 1.3 Fred Bogus Trumper 
 #
-VERSION="V1.3"
+VERSION="V1.3.1"
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -539,12 +539,14 @@ doPartitions() {
    echo "2" >> $ERASETMP
    echo "73728" >> $ERASETMP
    echo "8462335" >> $ERASETMP
-   # creating data Partition
-   echo "n" >> $ERASETMP
-   echo "p" >> $ERASETMP
-   echo "3" >> $ERASETMP
-   echo "8462336" >> $ERASETMP
-   echo "" >> $ERASETMP
+   if $COPYDATA; then
+      # creating data Partition
+      echo "n" >> $ERASETMP
+      echo "p" >> $ERASETMP
+      echo "3" >> $ERASETMP
+      echo "8462336" >> $ERASETMP
+      echo "" >> $ERASETMP
+   fi
    # changing DREAMBOOT Partition to FAT
    echo "t" >> $ERASETMP
    echo "1" >> $ERASETMP
@@ -588,9 +590,9 @@ doPartitions() {
             # bad idea ...
             mknod /dev/mmcblk1p3 b 179 131
          else
-            echo "/dev/mmcblk1p3 not found - reboot without sd-card, insert and try again"
+            echo "/dev/mmcblk1p3 not found."
             echo $LINE                                                                
-            dumboExit
+            # dumboExit
          fi
       else
          echo "/dev/mmcblk1p3 exists"
