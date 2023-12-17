@@ -53,10 +53,10 @@ showRainbow() {
 
 setCmdLine() {
    CMDLINE=""
-   if [ $DREAMBOX == "dreamone" ]; then
+   if [ "$DREAMBOX" == "dreamone" ]; then
       CMDLINE="logo=osd0,loaded,0x7f800000 vout=1080p50hz,enable hdmimode=1080p50hz fb_width=1280 fb_height=720 console=ttyS0,1000000 root=/dev/mmcblk1p2 rootwait rootfstype=ext4 no_console_suspend panel_type=lcd_4"
    else
-      if [ $DREAMBOX == "dreamtwo" ]; then
+      if [ "$DREAMBOX" == "dreamtwo" ]; then
          CMDLINE="logo=osd0,loaded,0x0 vout=1080p50hz,enable hdmimode=1080p50hz fb_width=1280 fb_height=720 console=ttyS0,1000000 root=/dev/mmcblk1p2 rootwait rootfstype=ext4 no_console_suspend panel_type=lcd_4"
       else
          echo "only dreamone | dreamtwo supported"
@@ -165,14 +165,14 @@ getModel() {
    if [ -z $DREAMBOX ]; then
       if [ `cat /proc/stb/info/model | grep one | wc -l` -gt 0 ]; then
          DREAMBOX="dreamone"
+	 true
       fi
       if [ `cat /proc/stb/info/model | grep two | wc -l` -gt 0 ]; then
          DREAMBOX="dreamtwo"
+	 true
       fi
    fi
-   if [ $DREAMBOX == "dreamone" -o $DREAMBOX == "dreamtwo" ]; then
-      true
-   else
+   if [ ! "$DREAMBOX" = "dreamone" ] && [ ! "$DREAMBOX" = "dreamtwo" ]; then
       echo "ERROR: only dreamone | dreamtwo supported"
       false
    fi
